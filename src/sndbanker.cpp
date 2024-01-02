@@ -1,5 +1,5 @@
 /******************************************************************************/
-// Sound Banker - WAV to DAT sound bank creator for KeeperFX
+// Sound Banker - WAV to DAT sound bank creator for Syndicate Wars
 /******************************************************************************/
 /** @file sndbanker.cpp
  *     Program code file.
@@ -8,7 +8,7 @@
  * @par Comment:
  *     None.
  * @author   Tomasz Lis <listom@gmail.com>
- * @date     21 Sep 2013 - 06 Jul 2014
+ * @date     21 Sep 2013 - 02 Jan 2024
  * @par  Copying and copyrights:
  *     This program is free software; you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -133,8 +133,7 @@ int load_soundlist(ProgramOptions &opts, const std::string &fname)
         int sfxid;
         std::getline(infile, str, '\n');
         istringstream iss(str);
-        sfxid = 0;
-        iss >> str >> sfxid;
+        sfxid = 90; /* This is always 90 in SWars, doesn't seem to work like DK */ 
         if (!str.empty()) {
             opts.inp.push_back(SoundFile(lstpath+"/"+str,sfxid));
             LogDbg("%s sfxid=%d\n",str.c_str(),sfxid);
@@ -351,6 +350,9 @@ short save_dat_file(WorkingSet& ws, std::vector<SoundData>& snds, const std::str
             memset(&bentries[2],0,sizeof(SoundBankEntry));
             bentries[2].field_0 = bentries[2].field_C = ftell(sbfile);
             bentries[2].field_8 = sizeof(SoundBankSample) * samples.size();
+            memset(&bentries[6],0,sizeof(SoundBankEntry));
+            bentries[6].field_0 = bentries[6].field_C = ftell(sbfile);
+            bentries[6].field_8 = sizeof(SoundBankSample) * samples.size();
             memset(&bfoot,0,sizeof(SoundBankFoot));
             bfoot.start3 = ftell(sbfile);
         }
