@@ -1,5 +1,5 @@
 /******************************************************************************/
-// Sound Banker - WAV to DAT sound bank creator for KeeperFX
+// Sound Banker - WAV to DAT sound bank creator for Bullfrog games
 /******************************************************************************/
 /** @file sndbanker_stdres.rc
  *     Standard Windows resources used by SndBanker application.
@@ -19,7 +19,7 @@
 /******************************************************************************/
 
 #include <windows.h> // include for version info constants
-#include "../src/sndbanker_version.h" // define values for version info
+#include "../src/sndbanker_ver.h" // define values for version info
 
 A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "sndbanker.ico"
 

@@ -27,7 +27,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "prog_options.h"
+#include "prog_options.hpp"
 #include "sndbanker_ver.h"
 
 using namespace std;
@@ -215,7 +215,7 @@ int load_command_line_options(ProgramOptions &opts, int argc, char *argv[])
 
 short show_head(void)
 {
-    printf("\n%s (%s) %s\n",PROGRAM_FULL_NAME,PROGRAM_NAME,VER_STRING);
+    printf("\n%s (%s) %s\n",PROGRAM_FULL_NAME,PROGRAM_NAME,FILE_VERSION);
     printf("  Created by %s; %s\n",PROGRAM_AUTHORS,LEGAL_COPYRIGHT);
     printf("----------------------------------------\n");
     return ERR_OK;
@@ -308,7 +308,7 @@ short save_dat_file(WorkingSet& ws, std::vector<SoundData>& snds, const std::str
         }
         // Write sound samples
         long base_pos = ftell(sbfile);
-        for (int i = 0; i < snds.size(); i++)
+        for (unsigned i = 0; i < snds.size(); i++)
         {
             SoundData &snd = snds[i];
             SoundBankSample &smp = samples[i+1];
@@ -319,7 +319,7 @@ short save_dat_file(WorkingSet& ws, std::vector<SoundData>& snds, const std::str
             smp.sfxid = snd.sfxid;
             int prev_sample_reuse = -1;
             // If this file was already added
-            for (int n = 0; n < i; n++)
+            for (unsigned n = 0; n < i; n++)
             {
                 SoundBankSample &prevsmp = samples[n+1];
                 if ((strcmp(smp.fname,prevsmp.fname) == 0) && (smp.length == prevsmp.length))
@@ -392,7 +392,7 @@ int main(int argc, char* argv[])
     std::vector<SoundData> snds;
     snds.resize(opts.inp.size());
     {
-        for (int i = 0; i < opts.inp.size(); i++)
+        for (unsigned i = 0; i < opts.inp.size(); i++)
         {
             if (verbose)
                 LogMsg("Loading sound sample \"%s\".",opts.inp[i].fname.c_str());

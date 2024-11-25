@@ -20,7 +20,7 @@
 #define SNDBANKER_VER_H
 
 /* Version definitions */
-#include "../obj/ver_defs.h"
+#include "config.h"
 //#define VER_MAJOR         1
 //#define VER_MINOR         2
 //#define VER_RELEASE       3
@@ -29,8 +29,8 @@
 
 /* Program name, copyrights and file names */
 #define PROGRAM_NAME      "sndbanker"
-#define PROGRAM_FULL_NAME "Sound Banker - WAV to DAT sound bank creator"
-#define PROGRAM_AUTHORS   "Tomasz Lis"
+#define PROGRAM_FULL_NAME PACKAGE_NAME
+#define PROGRAM_AUTHORS   "Mefistotelis"
 #define COMPANY_NAME      "Community based"
 #define INTERNAL_NAME     "sndbanker"
 #define LEGAL_COPYRIGHT   "GNU General Public License"

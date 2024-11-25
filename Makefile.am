@@ -5,7 +5,7 @@ bindir = $(prefix)/$(PACKAGE)
 sndbanker_SOURCES = \
 	src/sndbanker.cpp \
 	src/sndbanker_ver.h \
-	src/prog_options.h \
+	src/prog_options.hpp \
 	config.h
 
 if HAS_WINDRES
