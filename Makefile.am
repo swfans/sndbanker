@@ -4,7 +4,7 @@ bindir = $(prefix)/$(PACKAGE)
 
 sndbanker_SOURCES = \
 	src/sndbanker.cpp \
-	src/sndbanker_version.h \
+	src/sndbanker_ver.h \
 	src/prog_options.h \
 	config.h
 

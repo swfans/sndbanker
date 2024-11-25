@@ -1,7 +1,7 @@
 /******************************************************************************/
-// Sound Banker - WAV to DAT sound bank creator for KeeperFX
+// Sound Banker - WAV to DAT sound bank creator for Bullfrog games
 /******************************************************************************/
-/** @file sndbanker_version.h
+/** @file sndbanker_ver.h
  *     Project name, version, copyrights and global definitions.
  * @par Purpose:
  *     Header file for global names and defines used by resource compiler.
@@ -16,8 +16,8 @@
  *     (at your option) any later version.
  */
 /******************************************************************************/
-#ifndef SNDBANKER_VERSION_H
-#define SNDBANKER_VERSION_H
+#ifndef SNDBANKER_VER_H
+#define SNDBANKER_VER_H
 
 /* Version definitions */
 #include "../obj/ver_defs.h"
@@ -35,12 +35,12 @@
 #define INTERNAL_NAME     "sndbanker"
 #define LEGAL_COPYRIGHT   "GNU General Public License"
 #define LEGAL_TRADEMARKS  ""
-#define FILE_VERSION VER_STRING
-#define FILE_DESCRIPTION PROGRAM_NAME
+#define FILE_VERSION      VERSION
+#define FILE_DESCRIPTION  PROGRAM_NAME
 #define ORIGINAL_FILENAME INTERNAL_NAME".exe"
-#define PRODUCT_NAME PROGRAM_FULL_NAME
-#define PRODUCT_VERSION    VER_STRING
+#define PRODUCT_NAME      PROGRAM_FULL_NAME
+#define PRODUCT_VERSION   VERSION
 #define DEFAULT_LOG_FILENAME INTERNAL_NAME".log"
 
-#endif /*SNDBANKER_VERSION_H*/
+#endif /*SNDBANKER_VER_H*/
 /******************************************************************************/

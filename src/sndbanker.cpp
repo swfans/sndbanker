@@ -28,7 +28,7 @@
 #include <sstream>
 
 #include "prog_options.h"
-#include "sndbanker_version.h"
+#include "sndbanker_ver.h"
 
 using namespace std;
 
