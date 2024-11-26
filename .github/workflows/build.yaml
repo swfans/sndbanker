@@ -1,0 +1,144 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      refToBuild:
+        description: 'Branch, tag or commit SHA1 to build'
+        required: true
+        type: string
+
+jobs:
+  ubuntu-gcc:
+    runs-on: ubuntu-latest
+    name: "Linux Ubuntu x86_64"
+    container:
+      image: ubuntu:latest
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      TZ: Etc/UTC
+    steps:
+      - name: Install GIT
+        run: |
+          # install GIT, as without it checkout would use REST API
+          apt update
+          apt install -y \
+            git
+
+      - name: Checkout code at latest head
+        if: "${{ inputs.refToBuild == '' }}"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout code at requested ref
+        if: "${{ inputs.refToBuild != '' }}"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.refToBuild }}
+          fetch-depth: 0
+
+      - name: Set ownership
+        run: |
+          # this is to fix GIT not liking owner of the checkout dir
+          chown -R $(id -u):$(id -g) $PWD
+
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y \
+            gcc-multilib g++-multilib lib32z1
+
+          apt install -y \
+            build-essential autoconf libtool make \
+            pkg-config
+
+      - name: Autoreconf
+        run: autoreconf -ivf
+
+      - name: Configure
+        run: |
+          mkdir -p release; cd release
+          ../configure --prefix="/"
+
+      - name: Build executable
+        run: |
+          cd release
+          make V=1
+
+      - name: Copy for package
+        run: |
+          cd release
+          # Get version marking from C header
+          PKG_VERSION=$(sed -n 's/^#define[ ]\+PACKAGE_VERSION "\([^"]\+\)"$/\1/p' src/config.h | head -n 1 | tr '.' '_')
+          make V=1 DESTDIR=$PWD/pkg install
+          echo "PKG_NAME=sndbanker-$PKG_VERSION-x86_64-ubuntu" >> $GITHUB_ENV
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG_NAME }}
+          path: release/pkg/**
+
+  windows-msys2:
+    name: "Windows MSYS2 x86_64"
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Checkout code at latest head
+        if: "${{ inputs.refToBuild == '' }}"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout code at requested ref
+        if: "${{ inputs.refToBuild != '' }}"
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.refToBuild }}
+          fetch-depth: 0
+
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+              git
+              unzip
+              mingw-w64-x86_64-toolchain
+              mingw-w64-x86_64-autotools
+              mingw-w64-x86_64-pkg-config
+
+      - name: Autoreconf
+        run: autoreconf -ivf
+
+      - name: Configure
+        run: |
+          mkdir -p release; cd release
+          ../configure --prefix="/"
+
+      - name: Build executable
+        run: |
+          cd release
+          make V=1
+
+      - name: Copy for package
+        run: |
+          cd release
+          # Get version marking from C header
+          PKG_VERSION=$(sed -n 's/^#define[ ]\+PACKAGE_VERSION "\([^"]\+\)"$/\1/p' src/config.h | head -n 1 | tr '.' '_')
+          make V=1 DESTDIR=$PWD/pkg install
+          echo "PKG_NAME=sndbanker-$PKG_VERSION-x86_64-win" >> $GITHUB_ENV
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG_NAME }}
+          path: release/pkg/**
