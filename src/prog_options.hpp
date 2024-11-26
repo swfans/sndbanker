@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <cstdio>
 
 extern int verbose;
@@ -40,33 +41,33 @@ public:
     /** Name of the sound file the sample comes from. */
     char fname[SAMPLE_FNAME_LEN];
     /** Offset of the sample data in DAT file. */
-    size_t data;
+    uint32_t data;
     /** Unknown1. */
-    long unkn1;
+    int32_t unkn1;
     /** Size of the sample file. */
-    size_t length;
+    uint32_t length;
     /** SFX ID. */
-    unsigned char sfxid;
+    uint8_t sfxid;
     /** Unknown3. */
-    unsigned char field_1F;
+    uint8_t field_1F;
 };
 
 class SoundBankHead {
 public:
-  unsigned char field_0[14];
-  unsigned long field_E;
+  uint8_t field_0[14];
+  uint32_t field_E;
 };
 
 class SoundBankEntry {
 public:
     /** Offset of the first catalog entry in DAT file. */
-    unsigned long field_0;
+    uint32_t field_0;
     /** Offset to the sample data area. */
-    unsigned long field_4;
+    uint32_t field_4;
     /** Size of the sample catalog in DAT file. */
-    unsigned long field_8;
+    uint32_t field_8;
     /** Offset of the first catalog entry in DAT file. */
-    unsigned long field_C;
+    uint32_t field_C;
 };
 
 class SoundBankFoot {
@@ -74,12 +75,12 @@ public:
     /** Block 0x00 filled */
     char unkn7[16];
     /** Offset of the first catalog entry in DAT file. */
-    size_t start3;
+    uint32_t start3;
     /** Size of the catalog in DAT file. */
-    size_t catsize3;
+    uint32_t catsize3;
     char unkn8[48];
     /** Offset of the footer in DAT file. */
-    size_t footpos;
+    uint32_t footpos;
 };
 
 #pragma pack()
