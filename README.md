@@ -13,7 +13,7 @@ particular branch is intended only for Syndicate Wars.
 Using a properly formatted .txt file and source sound files, the tool can
 assemble a set of sound samples into a SOUND.DAT file usable by the game.
 
-Place the tool in the root directory of the sound files from the swars-sfx repository.
+Place the tool in the root directory of the sound files from the syndwarsfx-sfx repository.
 
 ### Usage
 

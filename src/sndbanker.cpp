@@ -133,7 +133,7 @@ int load_soundlist(ProgramOptions &opts, const std::string &fname)
         int sfxid;
         std::getline(infile, str, '\n');
         istringstream iss(str);
-        sfxid = 90; /* This is always 90 in SWars, doesn't seem to work like DK */ 
+        sfxid = 90; /* This is always 90 in SyndWars, doesn't seem to work like DK */
         if (!str.empty()) {
             opts.inp.push_back(SoundFile(lstpath+"/"+str,sfxid));
             LogDbg("%s sfxid=%d\n",str.c_str(),sfxid);
